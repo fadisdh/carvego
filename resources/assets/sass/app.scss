@@ -1,2 +1,86 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$gray-base: #252830;
+$body-bg: #252830;
+$primary-color: blue;
+$text-color: #999;
 
+@import "bootstrap-sass-3.3.5/assets/stylesheets/bootstrap";
+@import "css3-mixins/css3-mixins";
+
+a, a:hover, a:focus, a:visited{
+	text-decoration: none;
+}
+
+//Layout
+.nav{
+	/*.topbar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 50px;
+		background-color: #444;
+	}*/
+
+	.sidebar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 60px;
+		height: 100%;
+		background-color: $gray-darker;
+		overflow: hidden;
+
+		@include transition(width, 0.1s, ease-in);
+
+		&:hover{
+			width: 250px;
+		}
+
+		.wrapper{
+			width: 250px;
+		}
+	}
+}
+
+.main{
+	padding-left: 60px;
+	@include transition(padding-left, 0.05s, ease-in);
+
+	&.shift{
+		padding-left: 250px;
+	}
+}
+
+// Main Menu
+.main-menu{
+	ul{
+		li{
+			a{
+			display: block;
+			padding: 15px 0;
+			border-bottom: 1px solid $gray-dark;
+			color: #EEE;
+			font-size: 18px;
+			line-height: 24px;
+
+				&:hover{
+					background-color: $gray-dark;
+				}
+
+				i{
+					display: inline-block;
+					text-align: center;
+					width: 60px;
+					font-size: 24px;
+				}
+			}
+		}
+
+		li.active{
+			a{
+				background-color: $gray-dark;
+				cursor: default;
+			}
+		}
+	}
+}

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Validator;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -36,4 +37,35 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function name(){
+        return "$this->firstname $this->lastname";
+    }
+
+    //Validation
+    public function validate($data){
+        if($data['admin']){
+            return $this->validateSystemUser($data);
+        }else{
+            return $this->validateUser($data);
+        }
+    }
+
+    public function validateUser($data){
+        return Validator::make($data, [
+            'firstname'     => 'required|min:3',
+            'lastname'      => 'min:3',
+            'password'      => ($this->id ? '' : 'required|') . 'confirmed|min:8',
+            'email'         => 'required|email|unique:users' . ($this->id ? ",id,$this->id" : '')
+        ]);
+    }
+
+    public function validateSystemUser($data){
+        return Validator::make($data, [
+            'firstname'     => 'required|min:3',
+            'lastname'      => 'min:3',
+            'password'      => ($this->id ? '' : 'required|') . 'confirmed|min:8',
+            'email'         => 'required|email|unique:users' . ($this->id ? ",id,$this->id" : '')
+        ]);
+    }
 }
