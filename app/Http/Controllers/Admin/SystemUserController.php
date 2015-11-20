@@ -28,7 +28,7 @@ class SystemUserController extends Controller
 	}
 
 	/**
-     * show all rows
+     * show a row
      *
      * @param  Request  $request
      * @return Response
@@ -123,7 +123,7 @@ class SystemUserController extends Controller
      * @param  Request  $request
      * @return Response
      */
-	public function delete($id){
+	public function destroy($id){
 		$systemUser = User::where('id', $id)->where('admin', true)->firstOrFail();
 		$result = [];
 
