@@ -27,5 +27,38 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 
 	//System Users
 	Route::resource('systemuser', 'SystemUserController');
+
+
+
+
+
 	
 });
+
+
+
+
+Route::resource('car', 'CarController');
+
+Route::resource('city', 'CityController');
+
+Route::resource('comment', 'CommentController');
+
+Route::resource('featured', 'FeaturedController');
+
+Route::resource('option', 'OptionController');
+
+Route::resource('page', 'PageController');
+
+Route::resource('role', 'RoleController');
+
+Route::resource('user', 'UserController');
+
+
+
+
+
+
+
+
+
