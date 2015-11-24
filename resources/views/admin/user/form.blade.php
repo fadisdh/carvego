@@ -7,10 +7,10 @@
 @endif
 
 
-<div class="form-group {{ $errors->first('firstname') ? 'has-error' : '' }}">
+<div class="form-group">
     {!! Form::label('firstname', 'First Name', array('class' => 'form-label col-md-2')) !!}
     <div class="col-md-10">
-        {!! Form::text('firstname', null, array('class' => 'form-control')) !!}
+        {!! Form::text('firstname', Input::old('firstname'), array('class' => 'form-control')) !!}
     </div>
     <div class="col-md-10 col-md-offset-2">
         <div class="help-block">{{ $errors->first('firstname') }}</div>
@@ -48,7 +48,7 @@
 <div class="form-group">
     {!! Form::label('role', 'Role', array('class' => 'form-label col-md-2')) !!}
     <div class="col-md-10">
-        {!! Form::text('role', null, array('class' => 'form-control')) !!}
+        {!! Form::select('role', $roles, null, array('class' => 'form-control')) !!}
     </div>
 </div>
 
@@ -63,8 +63,6 @@
     {!! Form::submit('Save', array('class' => 'form-btn col-md-1 col-md-offset-11')) !!}
 </div>
 
-{{-- 
 <div class="form-group">
-		<input type="hidden" name="admin" value="1">
-		<input type="submit">
-</div> --}}
+	<input type="hidden" name="admin" value="1">
+</div>

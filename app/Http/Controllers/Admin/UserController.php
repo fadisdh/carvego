@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\Role;
 use Request;
 use Hash;
 use Input;
@@ -34,11 +35,13 @@ class UserController extends Controller
      */
     public function create()
     {
-            $user = new User();
-            
-            return view('admin.user.create')->with([
-                    'user'    => $user
-            ]);
+        $user = new User();
+        $roles = Role::all()->lists('name', 'id');
+        
+        return view('admin.user.create')->with([
+            'user'    => $user,
+            'roles'   => $roles
+        ]);
     }
 
     /**
@@ -79,9 +82,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $roles = Role::all()->lists('name', 'id');
 
         return view('admin.user.edit')->with([
-            'user'    => $user
+            'user'    => $user,
+            'roles'   => $roles
         ]);
     }
 
@@ -94,32 +99,32 @@ class UserController extends Controller
      */
     public function update($id)
     {
-            if($id == 0){
-                $user = new User();
+        if($id == 0){
+            $user = new User();
+        }else{
+            $user = User::find($id);
+        }
+
+        $result = [];
+
+        $validator = $user->validate(Input::all());
+        if($validator->passes()){
+            if($this->save($user)){
+                $result = jsonResult(true, 'Success');
             }else{
-                $user = User::find($id);
+                $result = jsonResult(false, 'Error in Saving');
             }
+        }else{
+            $result = jsonResult(false, 'Error in Validation');
+        }
 
-            $result = [];
-
-            $validator = $user->validate(Input::all());
-            if($validator->passes()){
-                if($this->save($user)){
-                    $result = jsonResult(true, 'Success');
-                }else{
-                    $result = jsonResult(false, 'Error in Saving');
-                }
-            }else{
-                $result = jsonResult(false, 'Error in Validation');
-            }
-
-            if(Request::ajax()){
-                return view()->json($result);
-            }else{
+        if(Request::ajax()){
+            return view()->json($result);
+        }else{
             if($result['status']){
                 return redirect()->route('admin.user.show', $user->id)->with($result);
             }else{
-                return redirect()->back()->withErrors($validator);
+                return redirect()->back()->withErrors($validator)->withInput();
             }
         }
         

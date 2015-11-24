@@ -17,7 +17,6 @@ class PageController extends Controller
      */
     public function index()
     {
-        return "1";
         $pages = Page::paginate(7);
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $pages));
@@ -120,7 +119,7 @@ class PageController extends Controller
             if($result['status']){
                 return redirect()->route('admin.page.show', $page->id)->with($result);
             }else{
-                return redirect()->back()->withErrors($validator);
+                return redirect()->back()->withErrors($validator)->withInput();
             }
         }
     }
