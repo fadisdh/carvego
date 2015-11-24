@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\City;
+use Request;
+use Hash;
+use Input;
 use App\Http\Controllers\Controller;
 
 class CityController extends Controller

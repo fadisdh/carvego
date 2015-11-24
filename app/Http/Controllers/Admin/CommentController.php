@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Comment;
 use Request;
 use Hash;
 use Input;
