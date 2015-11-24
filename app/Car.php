@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Validator;
 use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model

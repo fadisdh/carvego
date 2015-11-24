@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Validator;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
