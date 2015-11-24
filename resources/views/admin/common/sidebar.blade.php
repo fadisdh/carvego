@@ -2,15 +2,15 @@
 	<nav class="main-menu">
 		<ul class="list-unstyled">
 			<li class="active">
-				<a href="">
+				<a href="{{ URL::route('admin.systemuser.index') }}">
 					<i class="fa fa-home"></i>
-					<span class="text">Dashboard</span>
+					<span class="text">System Users</span>
 				</a>
 			</li>
 			<li>
-				<a href="">
+				<a href="{{ URL::route('admin.page.index') }}">
 					<i class="fa fa-home"></i>
-					<span class="text">Dashboard</span>
+					<span class="text">Pages</span>
 				</a>
 			</li>
 			<li>

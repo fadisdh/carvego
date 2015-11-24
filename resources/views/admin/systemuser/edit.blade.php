@@ -1,11 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Add New System User')
+@section('title', 'Edit New System User')
 
 @section('content')
-	<h1>New System User</h1>
-	<form action="{{ route('admin.systemuser.update', $systemUser->id) }}" method="post">
-		{{ csrf_field() }}
+	<h1>Edit System User</h1>
+	{!! Form::model($systemUser, [ 'route' => ['admin.systemuser.update', $systemUser->id], 'method' => 'put']) !!}
+		{!! csrf_field() !!}
 		@include('admin.systemuser.form')
-		<input type="hidden" name="_method" value="put" />
-	</form>
+	{!! Form::close() !!}
 @endsection

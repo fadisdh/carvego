@@ -45,6 +45,20 @@
     </div>
 </div>
 
+<div class="form-group">
+    {!! Form::label('role', 'Role', array('class' => 'form-label col-md-2')) !!}
+    <div class="col-md-10">
+        {!! Form::text('role', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('admin', 'Admin', array('class' => 'form-label col-md-2')) !!}
+    <div class="col-md-10">
+        {!! Form::text('admin', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
 <div class="form-group">  
     {!! Form::submit('Save', array('class' => 'form-btn col-md-1 col-md-offset-11')) !!}
 </div>
