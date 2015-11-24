@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\User;
+use Request;
+use Hash;
+use Input;
 use App\Http\Controllers\Controller;
 
 class PageController extends Controller
@@ -16,6 +17,7 @@ class PageController extends Controller
      */
     public function index()
     {
+        return "1";
         $pages = Page::paginate(7);
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $pages));

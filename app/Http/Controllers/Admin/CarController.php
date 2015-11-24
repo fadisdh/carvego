@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\User;
+use Request;
+use Hash;
+use Input;
 use App\Http\Controllers\Controller;
 
 class CarController extends Controller
@@ -34,9 +35,10 @@ class CarController extends Controller
     public function create()
     {
             $car = new Car();
-                return view('admin.car.create')->with([
-            'car'    => $car
-        ]);
+            
+            return view('admin.car.create')->with([
+                    'car'    => $car
+            ]);
     }
 
     /**
@@ -149,7 +151,7 @@ class CarController extends Controller
 
 
         // Private function to save or update the  user
-    private function save(&$user){
+    private function save(&$car){
 
 
             $car->title = input::get('title');
@@ -179,4 +181,5 @@ class CarController extends Controller
             $car->other = input::get('other');
 
            return $car->save();
+    }
 }
