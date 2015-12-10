@@ -4,7 +4,7 @@
 
 @section('container')
 	<div class="nav" role="navigation">
-		<div id="topbar" class="topbar">@yield('topbar')</div>
+		<div id="topbar" class="topbar">@include('admin.common.topbar')</div>
 		<div id="sidebar" class="sidebar">@include('admin.common.sidebar')</div>
 	</div>
 	<div id="main" class="main" role="main">

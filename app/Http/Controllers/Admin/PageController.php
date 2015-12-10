@@ -17,7 +17,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::paginate(7);
+        $pages = Page::paginate(1);
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $pages));
         }else{

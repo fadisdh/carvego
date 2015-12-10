@@ -1,7 +1,11 @@
 $gray-base: #252830;
-$body-bg: #252830;
-$primary-color: blue;
-$text-color: #999;
+$body-bg: #fefefe;
+$primary-color: #393939;
+$secondary-color: #fe9622;
+$secondary-dark: #f38205;
+$text-color: #FFF;
+
+$table-bg: $primary-color;
 
 @import "bootstrap-sass-3.3.5/assets/stylesheets/bootstrap";
 @import "css3-mixins/css3-mixins";
@@ -9,45 +13,80 @@ $text-color: #999;
 a, a:hover, a:focus, a:visited{
 	text-decoration: none;
 }
+.admin-logo{
+	font-size:36px;
+	margin-top:3px;
+	padding:0 25px;
+	color: $secondary-color;
 
-//Layout
-.nav{
-	/*.topbar{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 50px;
-		background-color: #444;
-	}*/
-
-	.sidebar{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 60px;
-		height: 100%;
-		background-color: $gray-darker;
-		overflow: hidden;
-
-		@include transition(width, 0.1s, ease-in);
-
-		&:hover{
-			width: 250px;
-		}
-
-		.wrapper{
-			width: 250px;
-		}
+	&:hover{
+		color: $secondary-color;
 	}
 }
 
-.main{
-	padding-left: 60px;
-	@include transition(padding-left, 0.05s, ease-in);
+.btn{
+	float: right;
+	color: $text-color;
+	background-color:$secondary-color;
+	padding: 10px;
+	width:150px;
+	margin: 10px;
 
-	&.shift{
-		padding-left: 250px;
+	&:hover{
+		color: $text-color;
+		background-color:$secondary-dark;
+	}
+}
+
+//Layout
+.nav{
+	.topbar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		width: 100%;
+		height: 60px;
+		background-color: $primary-color;
+
+		.top-menu{
+			ul{
+				li{
+					float: left;
+					margin-top: 11px;
+
+					a{
+						display: block;
+						padding:10px;
+						font-size: 14px;
+						color:$secondary-color;
+
+						&:hover{
+							color:$secondary-dark;
+							background-color: #444;
+						} 
+					}
+				}
+			}
+
+		}
+	}
+
+	.sidebar{
+		position: fixed;
+		top: 60px;
+		left: 0;
+		width: 300px;
+		height: 100%;
+		background-color: $body-bg;
+		overflow: hidden;
+
+		@include transition(width, 0.1s, ease-in);
+		@include box-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "");
+
+		.wrapper{
+			width: 300px;
+		}
 	}
 }
 
@@ -58,13 +97,15 @@ a, a:hover, a:focus, a:visited{
 			a{
 			display: block;
 			padding: 15px 0;
-			border-bottom: 1px solid $gray-dark;
-			color: #EEE;
+			border-bottom: 1px solid $primary-color;
+			color: $primary-color;
 			font-size: 18px;
 			line-height: 24px;
 
 				&:hover{
-					background-color: $gray-dark;
+					color: $secondary-color;
+					background-color: $primary-color;
+					@include transition(padding-left, 0.05s, ease-in);
 				}
 
 				i{
@@ -78,9 +119,213 @@ a, a:hover, a:focus, a:visited{
 
 		li.active{
 			a{
-				background-color: $gray-dark;
+				background-color: #EEE;
 				cursor: default;
+			}
+		}
+
+		.admin-info{
+			text-align: center;
+			background-color:$primary-color;
+			color: $secondary-color;
+			padding:0 10px;
+
+			img{
+				padding:10px 0;
+				height: 160px;
+				width: 160px;
+			}
+
+			.info{
+				padding:10px;
+				h3{
+					margin: 0;
+					padding:2px 0;
+					font-size: 16px;
+				}
 			}
 		}
 	}
 }
+
+.main{
+	padding-left: 300px;
+	padding-top: 60px;
+
+	.page-header{
+		height: 60px;
+
+		h2{
+			padding:0;
+			color: $primary-color;
+		}
+
+		span{
+			color: $secondary-color;
+		}
+
+		.btn{
+			margin-top:15px;
+			margin-right:0;
+		}
+	}
+
+	.container-fluid{
+		padding:0 50px;
+
+		.pagination-container{
+			text-align: center;
+
+			.pagination{
+				span, a{
+					color: $secondary-color;
+				}
+
+				.active span{
+					background-color: $secondary-color;
+					color: $text-color;
+					border-color: $secondary-color;
+				}
+
+				.disabled span{
+					color: $primary-color;
+				}
+			}
+		}
+	}
+
+	// Admin Home
+	.dashboard{
+		padding:12px 0;
+		margin-bottom:30px;
+
+		.col-md-3, .col-md-6{
+			.dashboard-box {
+			    position: relative;
+			    display: block;
+			    overflow: hidden;
+			    height: 300px;
+			    margin-bottom: 5px;
+			    text-align: center;
+			    padding: 0;
+			    -webkit-box-shadow: 0 0 10px #333;
+			    -moz-box-shadow: 0 0 10px #333;
+			    box-shadow: 0 0 10px #333;
+			}
+
+			a{
+				cursor: pointer;
+				color: $primary-color;
+
+				&:hover{
+					background-color:#EEE;
+					@include transition(padding-left, 0.05s, ease-in);
+				}
+			}	
+
+				img{
+					margin-top:60px;
+				}
+
+				.main-chart img{
+					margin: 0;
+				}
+
+				.stat{
+					margin-top: 90px;
+				}
+
+				.stat-result{
+					font-size: 56px;
+				}
+
+			.clients{
+				background-color: $secondary-color;
+			}
+
+			.visitors{
+				background-color: #2588b1;
+			}
+
+			.listings{
+				background-color: #4cb050;
+			}
+
+			.others{
+				background-color: #00bbd4;
+			}
+		}
+
+	}
+
+	// Admin Tables
+	.table{
+		background-color: $text-color;
+		color: $primary-color;
+		@include box-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "");
+
+		thead{
+			background-color: $secondary-color;
+			color: $text-color;
+			th{
+				border-right: 1px solid #ddd;
+			}
+		}
+
+		tbody{
+			tr{
+				cursor: pointer;
+
+				&:nth-child(even){
+					background-color:#EEE;
+				}
+
+				&:hover{
+					background-color:#E7E7E7;
+				}
+
+				td{
+					border-right: 1px solid #ddd;
+
+					a{
+						color: $primary-color;
+
+						&:hover{
+							color: $secondary-color;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Admin Forms
+	form{
+
+		label{
+			margin-top: 5px;
+    		font-size: 16px;
+			color: $secondary-color;
+		}
+
+		.form-control{
+			&:focus{
+				border-color: $secondary-color;
+				@include box-shadow($x: 0, $y: 0, $blur: 1px, $color: $secondary-color, $inset: "");
+			}
+		}
+	}
+
+	// Admin Views
+	.adminview-row{
+		padding: 10px 5px;
+		border-bottom: 1px solid #CCC;
+		color: $primary-color;
+
+		.adminview-val{
+			font-weight: bold;
+		}
+	}
+
+}
+

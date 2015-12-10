@@ -2,7 +2,9 @@
 @section('title', 'Edit New city')
 
 @section('content')
-	<h1>Edit city</h1>
+	<div class="page-header">
+		<h2 class="page-title">Edit City <span>" {{ $city->name }} "</span></h2>
+	</div>
 	{!! Form::model($city, [ 'route' => ['admin.city.update', $city->id], 'method' => 'put']) !!}
 		{!! csrf_field() !!}
 		@include('admin.city.form')
