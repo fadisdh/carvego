@@ -7,6 +7,8 @@ use Request;
 use Hash;
 use Input;
 use App\Http\Controllers\Controller;
+use Event;
+use App\Events\PageWasDeleted;
 
 class PageController extends Controller
 {
@@ -104,7 +106,14 @@ class PageController extends Controller
 
             $validator = $page->validate(Input::all());
             if($validator->passes()){
+
+                if (Request::hasFile('image')) {
+
+                    $page->image = upload(Input::file('image'),'Pages'); 
+                }
+                
                 if($this->save($page)){
+
                     $result = jsonResult(true, 'Success');
                 }else{
                     $result = jsonResult(false, 'Error in Saving');
@@ -137,6 +146,7 @@ class PageController extends Controller
             $result = [];
 
             if($page->delete()){
+                Event::fire(new PageWasDeleted($page));
                 $result = jsonResult(true, 'Success');
             }else{
                 $result = jsonResult(false, 'Failed');
@@ -152,10 +162,10 @@ class PageController extends Controller
 
     private function save(&$page)
     {
-            $page->title = input::get('title');
-            $page->slug= input::get('slug');
-            $page->type= input::get('type');
-            $page->content= input::get('content');
+            $page->title       = input::get('title');
+            $page->slug      = input::get('slug');
+            $page->type      = input::get('type');
+            $page->content = input::get('content');
 
 
             return $page->save();

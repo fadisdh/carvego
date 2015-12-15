@@ -35,6 +35,11 @@
     </div>
 </div>
 
+<div class="form-group">
+    {!! Form::label('Page Image') !!}
+    {!! Form::file('image', null) !!}
+</div>
+
 <div class="form-group">  
     {!! Form::submit('Save', array('class' => 'form-btn col-md-1 col-md-offset-11')) !!}
 </div>

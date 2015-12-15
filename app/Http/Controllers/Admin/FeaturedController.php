@@ -149,7 +149,7 @@ class FeaturedController extends Controller
             }
     }
 
-    private save(&$featured)
+    private function save(&$featured)
     {
             $featured->type = input::get('type');
 

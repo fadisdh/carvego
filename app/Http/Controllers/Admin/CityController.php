@@ -103,7 +103,7 @@ class CityController extends Controller
             }
 
             $result = [];
-
+            
             $validator = $city->validate(Input::all());
             if($validator->passes()){
                 if($this->save($city)){

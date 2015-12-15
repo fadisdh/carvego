@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return "hey";
+Route::get('/delete', function () {
+     return view('admin.page.delete');
 });
 
 

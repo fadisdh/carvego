@@ -148,6 +148,9 @@ return [
         //Forms
         Collective\Html\HtmlServiceProvider::class,
 
+        //intervention for images
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -200,6 +203,8 @@ return [
         //forms
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+        //intervention
+        'Image' => 'Intervention\Image\Facades\Image',
 
     ],
 
