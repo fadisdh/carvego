@@ -6,18 +6,37 @@ use App\User;
 use Request;
 use Hash;
 use Input;
+use DB;
 use App\Http\Controllers\Controller;
 
 class SystemUserController extends Controller
 {
 	/**
-     * show all rows
+     * Display a listing of the resource.
      *
-     * @param  Request  $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
 	public function index(){
-		$systemUsers = User::where('admin', true)->get();
+		$q = Input::get('q');
+		$systemUsers = User::where('admin', true);
+
+		if($q){
+			$systemUsers->where(function($query) use($q){
+				$query->where('firstname', 'LIKE', "%$q%")
+					->orWhere('lastname', 'LIKE', "%$q%")
+					->orWhere('email', 'LIKE', "%$q%");
+			});
+		}
+
+		if(Input::Get('autocomplete')){
+			$systemUsers = $systemUsers
+								->select('*', DB::raw('CONCAT(firstname, " ", lastname, " - ", email) as identity'))
+								->lists('identity', 'id');
+			return response()->json($systemUsers);
+		}else{
+			$systemUsers = $systemUsers->get();
+		}
+
 		if(Request::ajax()){
 			return response()->json(jsonResult(true, 'Success', $systemUsers));
 		}else{
@@ -28,10 +47,32 @@ class SystemUserController extends Controller
 	}
 
 	/**
-     * show a row
+     * Show the form for creating a new resource.
      *
-     * @param  Request  $request
-     * @return Response
+     * @return \Illuminate\Http\Response
+     */
+	public function create(){
+		$systemUser = new User();
+		return view('admin.systemuser.create')->with([
+			'systemUser'	=> $systemUser
+		]);
+	}
+
+	/**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function store(){
+		return $this->update(0);
+	}
+
+	/**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
 	public function show($id){
 		$systemUser = User::where('id', $id)->where('admin', true)->firstOrFail();
@@ -45,23 +86,10 @@ class SystemUserController extends Controller
 	}
 
 	/**
-     * new row
+     * Show the form for editing the specified resource.
      *
-     * @param  Request  $request
-     * @return Response
-     */
-	public function create(){
-		$systemUser = new User();
-		return view('admin.systemuser.create')->with([
-			'systemUser'	=> $systemUser
-		]);
-	}
-
-	/**
-     * edit a row
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
 	public function edit($id){
 		$systemUser = User::where('id', $id)->where('admin', true)->firstOrFail();
@@ -70,21 +98,13 @@ class SystemUserController extends Controller
 		]);
 	}
 
-	/**
-     * save new row
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-	public function store(){
-		return $this->update(0);
-	}
 
 	/**
-     * save edited row
+     * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
 	public function update($id){
 		if($id == 0){
@@ -118,10 +138,10 @@ class SystemUserController extends Controller
 	}
 
 	/**
-     * delete row
+     * Remove the specified resource from storage.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
 	public function destroy($id){
 		$systemUser = User::where('id', $id)->where('admin', true)->firstOrFail();
@@ -140,7 +160,7 @@ class SystemUserController extends Controller
 		}
 	}
 
-	// Private function to save or update the system user
+	// Private function to save or update the resource
 	private function save(&$systemUser){
 		$systemUser->firstname = Input::get('firstname');
 		$systemUser->lastname = Input::get('lastname');

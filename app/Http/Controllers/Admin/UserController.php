@@ -7,6 +7,7 @@ use App\Role;
 use Request;
 use Hash;
 use Input;
+use DB;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -16,9 +17,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $users = User::paginate(7);
+    public function index(){
+        $q = Input::get('q');
+        $users = User::select('*');//where('admin', '<>', true);
+
+        if($q){
+            $users->where(function($query) use($q){
+                $query->where('firstname', 'LIKE', "%$q%")
+                    ->orWhere('lastname', 'LIKE', "%$q%")
+                    ->orWhere('email', 'LIKE', "%$q%");
+            });
+        }
+
+        if(Input::Get('autocomplete')){
+            $users = $users
+                    ->select('*', DB::raw('CONCAT(firstname, " ", lastname, " - ", email) as identity'))
+                    ->lists('identity', 'id');
+            return response()->json($users);
+        }else{
+            $users = $users->get();
+        }
+
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $users));
         }else{
@@ -33,8 +52,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $user = new User();
         $roles = Role::all()->lists('name', 'id');
         
@@ -50,8 +68,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
-    {
+    public function store(){
         return $this->update(0);
     }
 
@@ -61,8 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $user = User::find($id);
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $user));
@@ -79,8 +95,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $user = User::find($id);
         $roles = Role::all()->lists('name', 'id');
 
@@ -97,8 +112,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
-    {
+    public function update($id){
         if($id == 0){
             $user = new User();
         }else{
@@ -126,8 +140,7 @@ class UserController extends Controller
             }else{
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-        }
-        
+        }    
     }
 
     /**
@@ -136,27 +149,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-            $user = User::find($id);
-            
-            $result = [];
+    public function destroy($id){
+        $user = User::find($id);
+        
+        $result = [];
 
-            if($user->delete()){
-                $result = jsonResult(true, 'Success');
-            }else{
-                $result = jsonResult(false, 'Failed');
-            }
+        if($user->delete()){
+            $result = jsonResult(true, 'Success');
+        }else{
+            $result = jsonResult(false, 'Failed');
+        }
 
-            if(Request::ajax()){
-                return response()->json($result);
-            }else{
-                return rediredct()->route('admin.user.index')->with($result);
-            }
+        if(Request::ajax()){
+            return response()->json($result);
+        }else{
+            return rediredct()->route('admin.user.index')->with($result);
+        }
     }
 
+    // Private function to save or update the resource
     private function save(&$user){
-
         $user->firstname = Input::get('firstname');
         $user->lastname = Input::get('lastname');
         $user->email = Input::get('email');
@@ -167,8 +179,5 @@ class UserController extends Controller
         }
 
         return $user->save();
-
     }
-
-
 }

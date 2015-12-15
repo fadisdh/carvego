@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 Route::get('/', function () {
     return "hey";
 });
@@ -25,31 +14,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 	Route::get('logout', 'AuthController@logout')->name('admin.logout');
 	Route::get('/', 'HomeController@index')->name('admin.home');
 
-	//System Users
 	Route::resource('systemuser', 'SystemUserController');
-
-
-	
 	Route::resource('car', 'CarController');
-
 	Route::resource('city', 'CityController');
-
 	Route::resource('comment', 'CommentController');
-
 	Route::resource('featured', 'FeaturedController');
-
 	Route::resource('option', 'OptionController');
-
 	Route::resource('page', 'PageController');
-
 	Route::resource('role', 'RoleController');
-
 	Route::resource('user', 'UserController');
 
-
-
-
-	
+	Route::get('/autocomplete/systemuser', 'AutoCompleteController@systemUser')->name('admin.autocomplete.systemuser');
+	Route::get('/autocomplete/user', 'AutoCompleteController@user')->name('admin.autocomplete.user');
+	Route::get('/autocomplete/role', 'AutoCompleteController@role')->name('admin.autocomplete.role');
 });
 
 

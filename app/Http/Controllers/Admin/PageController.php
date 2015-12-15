@@ -17,7 +17,22 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::paginate(7);
+        $q = Input::get('q');
+        $pages = Page::select('*');
+
+        if($q){
+            $pages
+                ->where('title', 'LIKE', "%$q%")
+                ->orWhere('slug', 'LIKE', "%$q%");
+        }
+
+        if(Input::get('autocomplete')){
+            $pages = $pages->lists('title', 'id');
+            return response()->json($pages);
+        }else{
+            $pages = $pages->get();
+        }
+
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $pages));
         }else{
@@ -32,13 +47,12 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-            $page = new Page();
-            
-            return view('admin.page.create')->with([
-                    'page'    => $page
-            ]);
+    public function create(){
+        $page = new Page();
+        
+        return view('admin.page.create')->with([
+                'page'    => $page
+        ]);
     }
 
     /**
@@ -47,8 +61,7 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
-    {
+    public function store(){
         return $this->update(0);
     }
 
@@ -58,8 +71,7 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $page = Page::find($id);
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $page));
@@ -76,8 +88,7 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $page = Page::find($id);
 
         return view('admin.page.edit')->with([
@@ -92,30 +103,29 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
-    {
-            if($id == 0){
-                $page = new Page();
+    public function update($id){
+        if($id == 0){
+            $page = new Page();
+        }else{
+            $page = Page::find($id);
+        }
+
+        $result = [];
+
+        $validator = $page->validate(Input::all());
+        if($validator->passes()){
+            if($this->save($page)){
+                $result = jsonResult(true, 'Success');
             }else{
-                $page = Page::find($id);
+                $result = jsonResult(false, 'Error in Saving');
             }
+        }else{
+            $result = jsonResult(false, 'Error in Validation');
+        }
 
-            $result = [];
-
-            $validator = $page->validate(Input::all());
-            if($validator->passes()){
-                if($this->save($page)){
-                    $result = jsonResult(true, 'Success');
-                }else{
-                    $result = jsonResult(false, 'Error in Saving');
-                }
-            }else{
-                $result = jsonResult(false, 'Error in Validation');
-            }
-
-            if(Request::ajax()){
-                return view()->json($result);
-            }else{
+        if(Request::ajax()){
+            return view()->json($result);
+        }else{
             if($result['status']){
                 return redirect()->route('admin.page.show', $page->id)->with($result);
             }else{
@@ -130,34 +140,31 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-            $page = Page::find($id);
-            
-            $result = [];
+    public function destroy($id){
+        $page = Page::find($id);
+        
+        $result = [];
 
-            if($page->delete()){
-                $result = jsonResult(true, 'Success');
-            }else{
-                $result = jsonResult(false, 'Failed');
-            }
+        if($page->delete()){
+            $result = jsonResult(true, 'Success');
+        }else{
+            $result = jsonResult(false, 'Failed');
+        }
 
-            if(Request::ajax()){
-                return response()->json($result);
-            }else{
-                return rediredct()->route('admin.page.index')->with($result);
-            }
+        if(Request::ajax()){
+            return response()->json($result);
+        }else{
+            return rediredct()->route('admin.page.index')->with($result);
+        }
     }
 
+    // Private function to save or update the resource
+    private function save(&$page){
+        $page->title = input::get('title');
+        $page->slug= input::get('slug');
+        $page->type= input::get('type');
+        $page->content= input::get('content');
 
-    private function save(&$page)
-    {
-            $page->title = input::get('title');
-            $page->slug= input::get('slug');
-            $page->type= input::get('type');
-            $page->content= input::get('content');
-
-
-            return $page->save();
+        return $page->save();
     }
 }

@@ -15,9 +15,22 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $roles = Role::paginate(7);
+    public function index(){
+        $q = Input::get('q');
+
+        $roles = Role::select('*');
+
+        if($q){
+            $roles->where('name', 'LIKE', "%$q%");
+        }
+
+        if(Input::get('autocomplete')){
+            $roles = $roles->lists('name', 'id');
+            return response()->json($roles);
+        }else{
+            $roles = $roles->get();
+        }
+
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $roles));
         }else{
@@ -34,10 +47,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-             $role = new Role();
-                return view('admin.role.create')->with([
-                    'role'    => $role
-             ]);
+        $role = new Role();
+        return view('admin.role.create')->with([
+            'role'    => $role
+        ]);
       
     }
 
@@ -47,8 +60,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
-    {
+    public function store(){
         return $this->update(0);
     }
 
@@ -58,8 +70,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $role = Role::find($id);
         
         if(Request::ajax()){
@@ -77,14 +88,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $role = Role::find($id);
 
         return view('admin.role.edit')->with([
             'role'    => $role
         ]);
-
     }
 
     /**
@@ -94,37 +103,35 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
-    {
-            if($id == 0){
-                $role = new Role();
+    public function update($id){
+        if($id == 0){
+            $role = new Role();
+        }else{
+            $role = Role::find($id);
+        }
+
+        $result = [];
+
+        $validator = $role->validate(Input::all());
+        if($validator->passes()){
+            if($this->save($role)){
+                $result = jsonResult(true, 'Success');
             }else{
-                $role = Role::find($id);
+                $result = jsonResult(false, 'Error in Saving');
             }
+        }else{
+            $result = jsonResult(false, 'Error in Validation');
+        }
 
-            $result = [];
-
-            $validator = $role->validate(Input::all());
-            if($validator->passes()){
-                if($this->save($role)){
-                    $result = jsonResult(true, 'Success');
-                }else{
-                    $result = jsonResult(false, 'Error in Saving');
-                }
-            }else{
-                $result = jsonResult(false, 'Error in Validation');
-            }
-
-            if(Request::ajax()){
-                return view()->json($result);
-            }else{
+        if(Request::ajax()){
+            return view()->json($result);
+        }else{
             if($result['status']){
                 return redirect()->route('admin.role.show', $role->id)->with($result);
             }else{
                 return redirect()->back()->withErrors($validator);
             }
         }
-
     }
 
     /**
@@ -133,33 +140,29 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-           $role = Role::find($id);
-            
-            $result = [];
+    public function destroy($id){
+       $role = Role::find($id);
+        
+       $result = [];
 
-            if($role->delete()){
-                $result = jsonResult(true, 'Success');
-            }else{
-                $result = jsonResult(false, 'Failed');
-            }
+       if($role->delete()){
+           $result = jsonResult(true, 'Success');
+       }else{
+           $result = jsonResult(false, 'Failed');
+       }
 
-            if(Request::ajax()){
-                return response()->json($result);
-            }else{
-                return rediredct()->route('admin.role.index')->with($result);
-            }
+       if(Request::ajax()){
+           return response()->json($result);
+       }else{
+           return rediredct()->route('admin.role.index')->with($result);
+       }
     }
 
+    // Private function to save or update the resource
     private function save(&$role){
+        $role->name = input::get('name');
+        $role->permissions = input::get('permissions');
 
-
-
-            $role->name = input::get('name');
-            $role->permissions = input::get('permissions');
-
-            return $role->save();
-
+        return $role->save();
     }
 }
