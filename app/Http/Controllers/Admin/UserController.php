@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(7);
+        $users = User::where('admin', false)->get();
         if(Request::ajax()){
             return response()->json(jsonResult(true, 'Success', $users));
         }else{
