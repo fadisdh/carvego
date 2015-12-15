@@ -2,14 +2,20 @@
 @section('title', 'pages')
 
 @section('content')
-	<h2 class="page-header">pages</h2>
-	<table class="table table-responsive">
+	<div class="page-header">
+		<h2 class="page-title col-md-10">Informative Pages</h2>
+		<a href="{{ URL::route('admin.page.create') }}" class="btn col-md-2">Add New Page</a>
+	</div>
+	<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>title</th>
-				<th>slug</th>
-				<th>type</th>
+				<th>Title</th>
+				<th>Slug</th>
+				<th>Type</th>
+				<th width="15"><span class="fa fa-eye"></span></th>
+				<th width="15"><span class="fa fa-edit"></span></th>
+				<th width="15"><span class="fa fa-trash"></span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,10 +25,17 @@
 					<td>{{ $page->title }}</td>
 					<td>{{ $page->slug }}</td>
 					<td>{{ $page->type }}</td>
+					<td><a href="{{ URL::route('admin.page.show', $page->id) }}" title="View"><span class="fa fa-eye"></span></a></td>
+					<td><a href="{{ URL::route('admin.page.edit', $page->id) }}" title="Edit"><span class="fa fa-edit"></span></a></td>
+					<td><a href="{{ URL::route('admin.page.destroy', $page->id) }}" title="Delete"><span class="fa fa-trash"></span></a></td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
+	<div class="pagination-container">
+		<?php echo $pages->render(); ?>
+	</div>
+	
 	<input type="text" name="user" class="form-control autocomplete" data-url="{{ route('admin.user.index') }}" autocomplete="off">
 	<script type="text/javascript" src="{{ asset('assets/vendor/jquery.autocomplete/jquery.autocomplete.js') }}"></script>
 	<script type="text/javascript">
@@ -45,4 +58,5 @@
 			});
 		});
 	</script>
+
 @endsection
