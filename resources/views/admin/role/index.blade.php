@@ -6,7 +6,7 @@
 		<h2 class="page-title col-md-10">User's Roles</h2>
 		<a href="{{ URL::route('admin.role.create') }}" class="btn col-md-2">Add New Role</a>
 	</div>
-	<table class="table table-responsive">
+	<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>

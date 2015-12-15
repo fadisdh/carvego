@@ -52,25 +52,25 @@
 
 	<div class="row dashboard">
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.systemuser.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/systemuser.png') !!}
                 <h3>System Users</h3>           
             </a>
         </div>
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.user.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/user.png') !!}
                 <h3>Users</h3>           
             </a>
         </div>
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.role.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/roles.png') !!}
                 <h3>Users Roles</h3>           
             </a>
         </div>
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.car.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/cars.png') !!}
                 <h3>Cars</h3>           
             </a>
@@ -79,13 +79,19 @@
 
 	<div class="row dashboard">
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.city.index') }}" class="dashboard-box">
+                {!! Html::image('/assets/admin/images/ads.png') !!}
+                <h3>Cities</h3>           
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ URL::route('admin.page.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/pages.png') !!}
                 <h3>Informative Pages</h3>           
             </a>
         </div>
         <div class="col-md-3">
-            <a class="dashboard-box">
+            <a href="{{ URL::route('admin.comment.index') }}" class="dashboard-box">
             	{!! Html::image('/assets/admin/images/comments.png') !!}
                 <h3>Users Comments</h3>           
             </a>
@@ -96,13 +102,20 @@
                 <h3>Advertisements</h3>           
             </a>
         </div>
+	</div>
+    <div class="row dashboard">
         <div class="col-md-3">
             <a class="dashboard-box">
-            	{!! Html::image('/assets/admin/images/options.png') !!}
+                {!! Html::image('/assets/admin/images/reports.png') !!}
+                <h3>Reports</h3>           
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ URL::route('admin.option.index') }}" class="dashboard-box">
+                {!! Html::image('/assets/admin/images/options.png') !!}
                 <h3>Options</h3>           
             </a>
         </div>
-	</div>
-
+    </div>
 
 @endsection

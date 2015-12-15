@@ -2,7 +2,9 @@
 @section('title', 'Add New System User')
 
 @section('content')
-	<h1>New System User</h1>
+	<div class="page-header">
+		<h2 class="page-title">Add New System User</h2>
+	</div>
 	{!! Form::model($systemUser, [ 'route' => ['admin.systemuser.store', $systemUser->id], 'method' => 'post']) !!}
 		{!! csrf_field() !!}
 		@include('admin.systemuser.form')

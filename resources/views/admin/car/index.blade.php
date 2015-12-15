@@ -6,7 +6,7 @@
 		<h2 class="page-title col-md-10">Cars</h2>
 		<a href="{{ URL::route('admin.car.create') }}" class="btn col-md-2">Add New Car</a>
 	</div>
-	<table class="table table-responsive">
+	<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>

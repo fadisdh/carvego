@@ -6,7 +6,7 @@
 		<h2 class="page-title col-md-10">Informative Pages</h2>
 		<a href="{{ URL::route('admin.page.create') }}" class="btn col-md-2">Add New Page</a>
 	</div>
-	<table class="table table-responsive">
+	<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>

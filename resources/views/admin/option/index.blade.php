@@ -6,7 +6,7 @@
 		<h2 class="page-title col-md-10">Options</h2>
 		<a href="{{ URL::route('admin.option.create') }}" class="btn col-md-2">Add New Option</a>
 	</div>
-	<table class="table table-responsive">
+	<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
 				<th>#</th>
