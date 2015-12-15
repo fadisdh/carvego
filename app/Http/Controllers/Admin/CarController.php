@@ -6,7 +6,9 @@ use App\Car;
 use Request;
 use Hash;
 use Input;
+use Event;
 use App\Http\Controllers\Controller;
+use App\Events\CarWasDeleted;
 
 class CarController extends Controller
 {
@@ -104,7 +106,23 @@ class CarController extends Controller
 
             $validator = $car->validate(Input::all());
             if($validator->passes()){
+
+
                 if($this->save($car)){
+                    if (Request::hasFile('image')) {
+                        $imagePaths =[];
+                        $files = Input::file('image');
+                        $count = count($files);
+                        foreach ($files as $file) {
+                            $imagePaths[] = upload($file,'Cars/'.$car->id);   
+                        }
+                        $imagePaths = json_encode($imagePaths);
+                        $car->image = $imagePaths;
+
+                        $this->save($car);
+                        
+                    
+                }
                     $result = jsonResult(true, 'Success');
                 }else{
                     $result = jsonResult(false, 'Error in Saving');
@@ -137,6 +155,7 @@ class CarController extends Controller
             $result = [];
 
             if($car->delete()){
+                Event::fire(new CarWasDeleted($car));
                 $result = jsonResult(true, 'Success');
             }else{
                 $result = jsonResult(false, 'Failed');
@@ -156,7 +175,7 @@ class CarController extends Controller
 
             $car->title = input::get('title');
             $car->description = input::get('description');
-            $car->image = input::get('image');
+            //$car->image = input::get('image');
             $car->price = input::get('price');
             $car->make= input::get('make');
             $car->model = input::get('model');

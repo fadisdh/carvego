@@ -44,7 +44,23 @@
     </div>
 </div>
 
+<div class="form-group">
+    {!! Form::label('Page Image') !!}
+    {!! Form::file('image', null) !!}
+</div>
+
 <div class="form-group row form-btns">
     <a href="{{ URL::route('admin.page.index') }}" class="form-btn btn">Cancel</a>
     {!! Form::submit('Save', array('class' => 'form-btn btn col-md-2 col-md-offset-10')) !!}
 </div>
+
+<div class="form-group">  
+    {!! Form::submit('Save', array('class' => 'form-btn col-md-1 col-md-offset-11')) !!}
+</div>
+
+{{-- 
+<div class="form-group">
+		<input type="hidden" name="admin" value="1">
+		<input type="submit">
+</div> --}}
+>>>>>>> origin/Mosaabk

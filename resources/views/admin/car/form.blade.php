@@ -24,14 +24,17 @@
     </div>
 </div>
 
-<div class="form-group row {{ $errors->first('image') ? 'has-error' : '' }}">
-    {!! Form::label('image', 'Image', array('class' => 'form-label col-md-2')) !!}
-    <div class="col-md-10">
-        {!! Form::text('image', null, array('class' => 'form-control')) !!}
-    </div>
-    <div class="col-md-10 col-md-offset-2">
-        <div class="help-block">{{ $errors->first('image') }}</div>
-    </div>
+<div class="form-group">
+    {!! Form::label('Car Image') !!}
+    {!! Form::file('image[]', null) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('Car Image') !!}
+    {!! Form::file('image[]', null) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('Car Image') !!}
+    {!! Form::file('image[]', null) !!}
 </div>
 
 <div class="form-group row {{ $errors->first('price') ? 'has-error' : '' }}">

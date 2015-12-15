@@ -1,7 +1,7 @@
 <?php
 
-Route::get('/', function () {
-    return "hey";
+Route::get('/delete', function () {
+     return view('admin.page.delete');
 });
 
 
@@ -28,14 +28,3 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 	Route::get('/autocomplete/user', 'AutoCompleteController@user')->name('admin.autocomplete.user');
 	Route::get('/autocomplete/role', 'AutoCompleteController@role')->name('admin.autocomplete.role');
 });
-
-
-
-
-
-
-
-
-
-
-

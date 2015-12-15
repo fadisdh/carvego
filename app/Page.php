@@ -12,7 +12,8 @@ class Page extends Model
     //Validation
     public function validate($data){
         return Validator::make($data, [
-            'title'     => 'required'
+            'title'      => 'required',
+            'image'  => 'required|mimes:png,jpeg'
         ]);
     }
 }
