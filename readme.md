@@ -1,4 +1,4 @@
-## All branches has been merged
+## All branches have been merged
 
 Image resive plugin is disabled, to enable it
 1- run composer update
