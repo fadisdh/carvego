@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageToPage extends Migration
+class AddStatusToCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddImageToPage extends Migration
      */
     public function up()
     {
-        Schema::table('pages', function($table){
-            $table->string('image')->after('content')->nullable();
+        Schema::table('comments', function($table){
+            $table->boolean('approved')->after('car_id')->nullable();
         });
     }
 
@@ -24,8 +24,8 @@ class AddImageToPage extends Migration
      */
     public function down()
     {
-        Schema::table('pages', function($table){
-            $table->dropColumn('image');
+        Schema::table('comments', function($table){
+            $table->dropColumn('approved');
         });
     }
 }

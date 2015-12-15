@@ -149,7 +149,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         //intervention for images
-        Intervention\Image\ImageServiceProvider::class,
+        //Intervention\Image\ImageServiceProvider::class,
 
     ],
 
