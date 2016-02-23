@@ -9,4 +9,11 @@
 		{!! csrf_field() !!}
 		@include('admin.page.form')
 	{!! Form::close() !!}
+
+	{!! Form::model($page, [ 'url' => 'admin/pageit/save', 'files' => true, 'method' => 'put']) !!}
+		<input type="file" name="image"></input>
+		<input type="submit"></input>		
+		{!! csrf_field() !!}
+	{!! Form::close() !!}
+
 @endsection

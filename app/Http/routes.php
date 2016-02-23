@@ -14,6 +14,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth
 	Route::get('logout', 'AuthController@logout')->name('admin.logout');
 	Route::get('/', 'HomeController@index')->name('admin.home');
 
+	Route::post('/image/delete', 'ImageController@delete')->name('admin.image.delete');
+
 	Route::resource('systemuser', 'SystemUserController');
 	Route::resource('car', 'CarController');
 	Route::resource('city', 'CityController');

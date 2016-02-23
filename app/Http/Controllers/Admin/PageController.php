@@ -51,10 +51,11 @@ class PageController extends Controller
      */
     public function create(){
         $page = new Page();
-        
-        return view('admin.page.create')->with([
-                'page'    => $page
-        ]);
+        $page->save();
+        return redirect()->route('admin.page.edit', $page->id);
+        // return view('admin.page.create')->with([
+        //         'page'    => $page
+        // ]);
     }
 
     /**
@@ -113,24 +114,27 @@ class PageController extends Controller
         }
 
         $result = [];
-        $validator = $page->validate(Input::all());
-            if($validator->passes()){
 
-            if (Request::hasFile('image')) {
-                $page->image = upload(Input::file('image'),'Pages'); 
-            }
-            
+        if (Request::hasFile('image')) {
+            $page->image = upload(Input::file('image'), 'Pages'); 
+        }
+
+        $validator = $page->validate(Input::all());
+        if($validator->passes()){
             if($this->save($page)){
                 $result = jsonResult(true, 'Success');
             }else{
                 $result = jsonResult(false, 'Error in Saving');
             }
+        }elseif(Request::hasFile('image')){
+            $page->save();
+            $result = jsonResult(true, 'Image Saved');
         }else{
             $result = jsonResult(false, 'Error in Validation');
         }
 
         if(Request::ajax()){
-            return view()->json($result);
+            return response()->json($result);
         }else{
             if($result['status']){
                 return redirect()->route('admin.page.show', $page->id)->with($result);
@@ -171,6 +175,7 @@ class PageController extends Controller
         $page->slug= input::get('slug');
         $page->type= input::get('type');
         $page->content= input::get('content');
+        $page->published= input::get('published');
 
         return $page->save();
     }

@@ -33,30 +33,7 @@
 		</tbody>
 	</table>
 	<div class="pagination-container">
-		<?php echo $pages->render(); ?>
+		<?php //echo $pages->render(); ?>
 	</div>
-	
-	<input type="text" name="user" class="form-control autocomplete" data-url="{{ route('admin.user.index') }}" autocomplete="off">
-	<script type="text/javascript" src="{{ asset('assets/vendor/jquery.autocomplete/jquery.autocomplete.js') }}"></script>
-	<script type="text/javascript">
-		$(function(){
-			$('.autocomplete').autocomplete({
-			    minChars: 2,
-			    lookup: function(query, result){
-			        $.getJSON("{{ route('admin.user.index') }}", { autocomplete: true, q: query})
-			        .done(function(data){
-			        	result({
-			        		suggestions: 	$.map(data, function(key, val){
-							        			return { value: key, data: val}
-							        		})
-			        	});
-			        })
-			        .fail(function(){
-			        	alert('ERROR IN CONNECTION');
-			        });
-			    }
-			});
-		});
-	</script>
 
 @endsection

@@ -1071,7 +1071,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857;
-  color: #FFF;
+  color: #333;
   background-color: #fefefe; }
 
 input,
@@ -4335,7 +4335,7 @@ a.badge:hover, a.badge:focus {
     margin-right: auto; }
   .thumbnail .caption {
     padding: 9px;
-    color: #FFF; }
+    color: #333; }
 
 a.thumbnail:hover,
 a.thumbnail:focus,
@@ -5877,13 +5877,13 @@ a, a:hover, a:focus, a:visited {
 
 .btn {
   float: right;
-  color: #FFF;
+  color: #333;
   background-color: #fe9622;
   padding: 10px;
   width: 150px;
   margin: 10px; }
   .btn:hover {
-    color: #FFF;
+    color: #333;
     background-color: #f38205; }
 
 .nav .sidebar {
@@ -5997,7 +5997,7 @@ a, a:hover, a:focus, a:visited {
         color: #fe9622; }
       .main .container-fluid .pagination-container .pagination .active span {
         background-color: #fe9622;
-        color: #FFF;
+        color: #333;
         border-color: #fe9622; }
       .main .container-fluid .pagination-container .pagination .disabled span {
         color: #393939; }
@@ -6046,11 +6046,11 @@ a, a:hover, a:focus, a:visited {
     .main .dashboard .col-md-3 .others, .main .dashboard .col-md-6 .others {
       background-color: #00bbd4; }
   .main .table {
-    background-color: #FFF;
+    background-color: #333;
     color: #393939; }
     .main .table thead {
       background-color: #fe9622;
-      color: #FFF; }
+      color: #333; }
     .main .table tbody tr {
       cursor: pointer; }
       .main .table tbody tr td {

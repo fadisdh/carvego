@@ -198,6 +198,7 @@ class CarController extends Controller
             $car->windows = input::get('windows');
             $car->entertainment = input::get('entertainment');
             $car->other = input::get('other');
+            $car->user_id = (int) input::get('user_id');
 
            return $car->save();
     }

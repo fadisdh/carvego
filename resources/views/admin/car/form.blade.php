@@ -67,6 +67,16 @@
     </div>
 </div>
 
+<div class="form-group row {{ $errors->first('model') ? 'has-error' : '' }}">
+    {!! Form::label('user_id', 'User', array('class' => 'form-label col-md-2')) !!}
+    <div class="col-md-10">
+        <input type="text" name="user_id" class="form-control autocomplete" data-url="{{ route('admin.user.index') }}" autocomplete="off">
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        <div class="help-block">{{ $errors->first('model') }}</div>
+    </div>
+</div>
+
 <div class="form-group row form-btns">
     <a href="{{ URL::route('admin.car.index') }}" class="form-btn btn">Cancel</a>
     {!! Form::submit('Save', array('class' => 'form-btn btn col-md-2 col-md-offset-10')) !!}

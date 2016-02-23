@@ -13,7 +13,7 @@ class Page extends Model
     public function validate($data){
         return Validator::make($data, [
             'title'      => 'required',
-            'image'  => 'required|mimes:png,jpeg'
+            'image'  => 'mimes:png,jpeg'
         ]);
     }
 }

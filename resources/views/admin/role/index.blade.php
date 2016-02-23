@@ -31,6 +31,6 @@
 		</tbody>
 	</table>
 	<div class="pagination-container">
-		<?php echo $roles->render(); ?>
+		<?php //echo $roles->render(); ?>
 	</div>
 @endsection

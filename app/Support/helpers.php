@@ -15,13 +15,10 @@ function jsonResult($status, $message, $data = null){
  * @param  String $imgName the name of the image.
  * @param  String $folderName the name of the folder you want to save the image in.
  */
+function upload($file, $folderName, $fileName = ''){
+	$fileName = uniqid() . time() . '.' . $file->getClientOriginalExtension();
+	$folderPath = 'Uploads/' . $folderName . '/';
 
-function upload($file,$folderName,$fileName=''){
-
-	$date = date_create();
-	$imageName = uniqid().date_timestamp_get($date).'.'. 
-	$file->getClientOriginalExtension();
-	$imagePath ='/Uploads/'.$folderName.'/'.$imageName;
-	$file->move(public_path().'/Uploads/'.$folderName,$imageName);//.$folderName.'/'.$imageName);
-	return $imagePath;
+	$file->move(public_path($folderPath), $fileName);
+	return $folderPath . $fileName;
 }

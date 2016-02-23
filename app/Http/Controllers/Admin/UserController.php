@@ -31,7 +31,7 @@ class UserController extends Controller
 
         if(Input::Get('autocomplete')){
             $users = $users
-                    ->select('*', DB::raw('CONCAT(firstname, " ", lastname, " - ", email) as identity'))
+                    ->select('*', DB::raw('CONCAT(id, " - ", firstname, " ", lastname, " - ", email) as identity'))
                     ->lists('identity', 'id');
             return response()->json($users);
         }else{
